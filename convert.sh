@@ -19,7 +19,7 @@ for file in $(find "$template_dir" -type f -name "*.md"); do
   echo "$(dirname -- "$output_name")"
   mkdir -p "$(dirname -- "$output_name")"
 
-  cp "skeleton.html" "$output_name"
+  cp $(dirname $0)/skeleton.html "$output_name"
   
   echo -e "Processing '$full_name' into '$output_name'\n"
 
