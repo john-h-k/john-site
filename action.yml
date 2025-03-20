@@ -1,4 +1,4 @@
-name: Convert Markdown to HTML
+name: john-site
 description: Run a custom shell script for markdown conversion.
 inputs:
   source:
