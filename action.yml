@@ -1,10 +1,10 @@
 name: Convert Markdown to HTML
 description: Run a custom shell script for markdown conversion.
 inputs:
-  src:
+  source:
     description: 'Markdown source directory'
     required: true
-  dest:
+  destination:
     description: 'HTML output directory'
     required: true
 runs:
