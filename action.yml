@@ -1,0 +1,14 @@
+name: Convert Markdown to HTML
+description: Run a custom shell script for markdown conversion.
+inputs:
+  src:
+    description: 'Markdown source directory'
+    required: true
+  dest:
+    description: 'HTML output directory'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: ./convert.sh "${{ inputs.src }}" "${{ inputs.dest }}"
+      shell: bash
