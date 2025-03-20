@@ -17,5 +17,7 @@ runs:
         GITHUB_ACTION_PATH: ${{ github.action_path }}
 
     - name: Convert Markdown to HTML
+      env:
+          GH_TOKEN: ${{ github.token }}
       run: convert.sh "${{ inputs.source }}" "${{ inputs.destination }}"
       shell: bash
