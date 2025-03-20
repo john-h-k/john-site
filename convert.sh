@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 template_dir="$1"
 target_dir="$2"
