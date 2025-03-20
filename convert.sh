@@ -45,3 +45,4 @@ for file in $(find "$template_dir" -type f -name "*.md"); do
   rm "$output_name.tmp"
 done
 
+cp $(dirname "$0")/styles.css "$target_dir"/styles.css
