@@ -1,0 +1,378 @@
+/********** Structure of the overall page + Borders **********/
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  display: grid;
+  grid-template:
+    "header header" auto
+    "about articles" auto
+    "lspacer rspacer" 1fr /* these prevent the about/articles blocks filling the page */
+    "footer footer" auto
+    / minmax(0, 1fr) minmax(0, 1fr);
+}
+
+@media(max-width: 480px) {
+  html {
+    font-size: 0.675em;
+  }
+
+  body {
+    max-width: 100dvw;
+    grid-template:
+      "header header" fit-content(100%)
+      "about about" fit-content(100%)
+      "articles articles" fit-content(100%)
+      "lspacer rspacer" auto
+      "footer footer" fit-content(100%)
+      / minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+header {
+  grid-area: header;
+  border-bottom: 2px solid #ccc;
+  padding: 1rem;
+}
+
+/* `display: contents` causes `main` to be ignored for the grid sizing, and is only present for accessibility */
+main {
+  display: contents;
+}
+
+
+/* Styling for home page */
+
+#articles {
+  grid-area: articles;
+}
+
+#john {
+  grid-area: about;
+}
+
+#lspacer {
+  grid-area: lspacer;
+}
+
+#rspacer {
+  grid-area: rspacer;
+}
+
+/* Using two borders of 1px (rather than one of 2px) makes sure divs are same size */
+
+@media not (max-width: 480px) {
+  #john, #lspacer { 
+    border-right: 1px solid #ccc;  
+  }
+
+  #articles, #rspacer {
+    border-left: 1px solid #ccc;
+  }
+}
+
+/* Styling for article page */
+
+article {
+  grid-area: about / about / rspacer / rspacer;
+}
+
+/* */
+
+footer {
+  grid-area: footer;
+  border-top: 2px solid #ccc;
+  padding: 1rem;
+}
+
+
+/********** Default styling changes **********/
+
+body {
+  margin: 0;
+}
+
+/* Set background and font */
+body {
+  background-color: #fff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1em;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff; /* #0000EE is also nice, and darker */
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+/********** Header bar **********/
+
+/* we use grid layout because it makes proper centering easiest */
+/* we expect all headers to contain 3 elements (left, centre, right) */
+header {
+  display: grid;
+  grid-template-columns: minmax(auto, 1fr) auto minmax(auto, 1fr);
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  margin: 0;
+  font-weight: 500;
+}
+
+header > :first-child {
+  white-space: nowrap;
+  text-align: left;
+}
+
+header > :last-child {
+  white-space: nowrap;
+  text-align: right;
+}
+
+header .back-home {
+  margin-right: 1.25em;
+  text-decoration: none;
+  color: black;
+  font-size: 1.2em;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+header .arrow {
+  margin-right: 8px;
+}
+
+/********** Main content - home page **********/
+
+.section-box {
+  box-sizing: border-box;
+  height: 100%;
+  width: 77.5%;
+  margin: 1.25em auto 0px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1.25em;
+}
+
+/* sections are vertical in mobile so no need for padding horizontally */
+@media(max-width: 480px) {
+  .section-box {
+    height: fit-content;
+  }
+
+  .section {
+    padding-left: 0em;
+    padding-right: 0em;
+    margin-left: 0em;
+    margin-right: 0em;
+  }
+}
+
+
+.section h1 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 0.5em;
+}
+
+.section p {
+  margin: 0.25em;
+}
+
+#articles ul {
+  list-style: none;
+  padding: 0em;
+  margin: 0em;
+}
+
+#articles li {
+  /* this 9px margin is carefully picked to make the top line of `About Me` at same pos as top line of `Articles` */
+  margin: 9px 0 0.75em 0;
+}
+
+#articles a {
+  font-weight: 500;
+}
+
+#john a {
+  font-weight: 999;
+}
+
+#john img {
+  padding: 0em 0em;
+}
+
+#john .logo {
+  padding-left: 10px;
+}
+
+/********** Main content - articles **********/
+
+article {
+  background-color: #fff;
+  padding: 5vh 10vw;
+}
+
+/********** Footer bar **********/
+
+footer {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: 1.25em;
+  row-gap: 0em;
+}
+
+@media(max-width: 480px) {
+  footer {
+    row-gap: 1em;
+  }
+}
+
+
+/********** Button component **********/
+
+/* Used for CV button as well as links in footer */
+
+.button {
+  background-color: #f1f1f1;
+  padding: 0.9375em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: fit-content;
+  height: fit-content;
+}
+
+.button > a {
+  text-decoration: none;
+  font-size: 1.2em;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.button > a > * {
+  margin-right: 0.625em;
+  font-size: 1.4em;
+  line-height: 1em;
+}
+
+/********** Inline/block code styling **********/
+
+/* markdown generator will sometimes not give bulletpoints a <p> tag so we need to force the right behaviour for <li> tags */
+
+li {
+  /* display: block; */
+  margin: 1em 0em;
+}
+
+pre, tt, code, kbd, samp {
+  /* Override HLJS - needs `!important`*/
+  font-family: 'Berkeley Mono', 'Courier New', monospace !important;
+  background-color: #f8f9fa !important;  /* Light gray background */  
+}
+
+pre {
+  border: 1px solid #ccc;      /* Border */
+  overflow-x: auto;            /* Scroll bar if the code is wide */
+  background-color: #f8f9fa;  /* Light gray background */
+
+  font-size: 1.2em;
+  border-radius: 3px;
+}
+
+/* Makes inline code a bit clearer */
+div code, p code, span code, li code, ul code, h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
+  /* font-size: 1em; */
+  padding: 0.05em 0.2em;
+  background-color: #f4f4f4;
+  border-radius: 3px;
+}
+
+blockquote {
+  border-left: 4px solid #007bff;  /* Blue border on the left */
+  background-color: #f8f9fa;  /* Light gray background */
+  margin: 20px 0;  /* Vertical spacing */
+  padding: 10px 20px;  /* Padding */
+  quotes: "\201C""\201D""\2018""\2019";  /* Add quote marks */
+}
+
+blockquote:before {
+  content: open-quote;  /* Opening quote */
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  display: inline;  /* To keep quote symbol and text together */
+}
+
+.loading {
+  grid-area: about / about / rspacer / rspacer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.lds-ring {
+  /* change color here */
+  color: #ccc
+}
+.lds-ring,
+.lds-ring div {
+  box-sizing: border-box;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid currentColor;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: currentColor transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
