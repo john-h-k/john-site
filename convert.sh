@@ -39,8 +39,8 @@ for file in $(find "$template_dir" -type f -name "*.md"); do
   escaped_title="$(printf '%q' "$title")"
   content="$(cat "$output_name.tmp" | tr -d '\n')"
 
-  gsed -i "s/\[\[TITLE\]\]/$escaped_title/g" "$output_name"
-  gsed -i "/[[BODY]]/{
+  sed -i "s/\[\[TITLE\]\]/$escaped_title/g" "$output_name"
+  sed -i "/[[BODY]]/{
     r $output_name.tmp
     d
   }" "$output_name"
