@@ -45,5 +45,8 @@ for file in $(find "$template_dir" -type f -name "*.md"); do
   rm "$output_name.tmp"
 done
 
+echo "Copying $template_dir/assets to $target_dir/assets"
+cp -r "$template_dir"/assets "$target_dir"/assets
+
 echo "Copying $(dirname "$0")/styles.css to $target_dir/styles.css"
 cp $(dirname "$0")/styles.css "$target_dir"/styles.css
