@@ -7,7 +7,7 @@ mkdir -p "$target_dir"
 
 echo "Reading templates from '$template_dir' and generating into '$target_dir'"
 
-for file in $(find "$template_dir" -type f); do
+for file in $(find "$template_dir" -type f -not -path '*/.*'); do
   full_name=$(realpath --relative-to "$template_dir" -- "$file")
   mkdir -p "$(dirname -- "$target_dir/$full_name")"
 
