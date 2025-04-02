@@ -9,6 +9,7 @@ echo "Reading templates from '$template_dir' and generating into '$target_dir'"
 
 for file in $(find "$template_dir" -type f); do
   full_name=$(realpath --relative-to "$template_dir" -- "$file")
+  mkdir -p "$(dirname -- "$target_dir/$full_name")"
 
   # non markdown files simply get copied over
 
@@ -25,9 +26,6 @@ for file in $(find "$template_dir" -type f); do
     if [[ "$title" == "README" ]]; then
       output_name="$target_dir/index.html"
     fi
-
-    echo "$(dirname -- "$output_name")"
-    mkdir -p "$(dirname -- "$output_name")"
 
     cp "$(dirname $0)/skeleton.html" "$output_name"
   
@@ -55,3 +53,6 @@ for file in $(find "$template_dir" -type f); do
     rm "$output_name.tmp"
   fi
 done
+
+echo "Copying '$(dirname "$0")/styles.css' to '$target_dir/styles.css'"
+cp "$(dirname "$0")/styles.css" "$target_dir/styles.css"
