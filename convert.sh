@@ -2,6 +2,7 @@
 
 template_dir="$1"
 target_dir="$2"
+skeleton="${3:-$(dirname $0)/skeleton.html}"
 
 mkdir -p "$target_dir"
 
@@ -27,7 +28,7 @@ for file in $(find "$template_dir" -type f -not -path '*/.*'); do
       output_name="$target_dir/index.html"
     fi
 
-    cp "$(dirname $0)/skeleton.html" "$output_name"
+    cp "$skeleton" "$output_name"
   
     echo "Processing '$full_name' into '$output_name'"
 
