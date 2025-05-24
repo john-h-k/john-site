@@ -54,6 +54,3 @@ for file in $(find "$template_dir" -type f -not -path '*/.*'); do
     rm "$output_name.tmp"
   fi
 done
-
-echo "Copying '$(dirname "$0")/styles.css' to '$target_dir/styles.css'"
-cp "$(dirname "$0")/styles.css" "$target_dir/styles.css"
