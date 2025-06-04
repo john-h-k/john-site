@@ -57,7 +57,7 @@ done
 
 # NOTE: current main website has its own version of all 3
 defaults=(styles.css 404.html not_found.html)
-for file in "${files[@]}"; do
+for file in "${defaults[@]}"; do
   if ! [ -e "$target_dir/$file" ]; then
     echo "Copying '$(dirname "$0")/$file' to '$target_dir/$file'"
     cp "$(dirname "$0")/$file" "$target_dir/$file"
