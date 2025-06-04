@@ -55,13 +55,11 @@ for file in $(find "$template_dir" -type f -not -path '*/.*'); do
   fi
 done
 
-# copy default CSS + 404 page if not provided
-if ! [ -e "$target_dir/styles.css" ]; then
-  echo "Copying '$(dirname "$0")/styles.css' to '$target_dir/styles.css'"
-  cp "$(dirname "$0")/styles.css" "$target_dir/styles.css"
-fi
-
-if ! [ -e "$target_dir/404.html" ]; then
-  echo "Copying '$(dirname "$0")/404.html' to '$target_dir/404.html'"
-  cp "$(dirname "$0")/404.html" "$target_dir/404.html"
-fi
+# NOTE: current main website has its own version of all 3
+defaults=(styles.css 404.html not_found.html)
+for file in "${files[@]}"; do
+  if ! [ -e "$target_dir/$file" ]; then
+    echo "Copying '$(dirname "$0")/$file' to '$target_dir/$file'"
+    cp "$(dirname "$0")/$file" "$target_dir/$file"
+  fi
+done
