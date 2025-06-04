@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>John's Blog</title>
+  <link rel="stylesheet" type="text/css" href="/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <meta property="og:title" content="John's site" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://johnk.dev" />
+  <meta property="og:description" content="A site for my projects, articles, and other bits" />
+  <title>Loading...</title>
+  <script type="module" async>
+    // this might be dangerous....
+    let path = window.location.pathname;
+
+    if (path[0] == "/") {
+      path = path.substring(1);
+    }
+
+    // contains repo and main branch
+    const known_repos = new Map([
+      ["jcc", "main"],
+      ["mathsharp", "master"],
+      ["voltium", "master"],
+      ["rustfuck", "main"],
+      ["rustc_codegen_jcc", "master"]
+    ]);
+
+    const subdomain = window.location.host.split('.')[0]
+
+    let repo;
+    let file;
+    if (subdomain != "johnk") {
+      repo = subdomain;
+      file = path;
+
+      console.log(`detected repo '${repo}' from subdomain, file '${file}' from path`);
+    } else {
+      const [first, ...parts] = path.split("/");
+      repo = first;
+      file = parts.length ? parts.join("/") : null;
+
+      console.log(`detected repo '${repo}', file '${file}' from path`);
+    }
+
+    const url = `https://github.com/john-h-k/${repo}`;
+    const api_url = `https://api.github.com/repos/john-h-k/${repo}`;
+
+    const is_firefox = navigator.userAgent.toLowerCase().includes("firefox");
+
+    if (repo.trim() != "") {
+      if (is_firefox) {
+        const main = document.querySelector(".loading");
+        main.innerHTML = "";
+
+        const notice = document.createElement("div");
+        notice.style.cssText = `
+          color: #000;
+          padding: 15px;
+          border-radius: 8px;
+          text-align: center;
+          font-weight: 600;
+          font-size: 1rem;
+          margin: 20px;
+        `;
+        notice.innerHTML = `
+          <p>Firefox detected! If the redirect fails, click <a href="#" id="redir" style="color: #000; text-decoration: underline;">here</a>.</p>
+        `;
+        main.prepend(notice);
+
+        document.addEventListener("DOMContentLoaded", () => {
+          document.getElementById("redir").href = url;
+        });
+      } else if (known_repos.has(repo)) {
+        const branch = known_repos[repo];
+        
+        if (file) {
+          window.location.href = `${url}/blob/${branch}/${file}`;
+        } else {
+          window.location.href = url;
+        }
+      } else {
+        fetch(api_url, { method: "GET" })
+          .then(async response => {
+            if (response.ok) {
+              window.location.href = url;
+
+              const data = await response.json();
+              const branch = data.default_branch;
+
+              if (file && branch) {
+                window.location.href = `${url}/blob/${branch}/${file}`;
+              } else {
+                window.location.href = url;
+              }
+            } else {
+              window.location.pathname = "/not_found.html";
+            }
+          })
+          .catch(error => {
+              window.location.pathname = "/not_found.html";
+          });
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="button">
+      <a href="/">
+        <span class="arrow">&#8617;</span> Back Home
+      </a>
+    </div>
+    <h1>John's Blog</h1>
+    <div></div> <!-- empty div needed for 3-col header grid -->
+  </header>
+
+  <main>
+    <div class="loading">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="button">
+      <a href="https://twitter.com/johnkdev" target="_blank">
+        <i class="fab fa-twitter"></i> johnkdev
+      </a>
+    </div>
+    <div class="button">
+      <a href="https://github.com/john-h-k" target="_blank">
+        <i class="fab fa-github"></i> john-h-k
+      </a>
+    </div>
+    <div class="button">
+      <a href="https://linkedin.com/in/johnharrykelly" target="_blank">
+        <i class="fab fa-linkedin"></i> John Kelly
+      </a>
+    </div>
+    <div class="button">
+      <a href="mailto:johnharrykelly@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i> johnharrykelly@gmail.com
+      </a>
+    </div>
+  </footer>
+</body>
+</html>
+
+
