@@ -76,7 +76,7 @@
           document.getElementById("redir").href = url;
         });
       } else if (known_repos.has(repo)) {
-        const branch = known_repos[repo];
+        const branch = known_repos.get(repo);
         
         if (file) {
           window.location.href = `${url}/blob/${branch}/${file}`;
