@@ -14,6 +14,16 @@
   <meta property="og:description" content="A site for my projects, articles, and other bits" />
   <title>Loading...</title>
   <script type="module" async>
+    const redirNotFound = () {
+      console.log(`redirecting to actual 404 page...`);
+      window.location.pathname = "/not_found.html";
+    };
+
+    const redirUrl = (url) {
+      console.log(`redirecting to '${url}'...`);
+      window.location.href = url;
+    };
+
     // this might be dangerous....
     let path = window.location.pathname;
 
@@ -79,9 +89,9 @@
         const branch = known_repos.get(repo);
         
         if (file) {
-          window.location.href = `${url}/blob/${branch}/${file}`;
+          redirUrl(`${url}/blob/${branch}/${file}`);
         } else {
-          window.location.href = url;
+          redirUrl(url);
         }
       } else {
         fetch(api_url, { method: "GET" })
@@ -93,16 +103,16 @@
               const branch = data.default_branch;
 
               if (file && branch) {
-                window.location.href = `${url}/blob/${branch}/${file}`;
+                redirUrl(`${url}/blob/${branch}/${file}`);
               } else {
-                window.location.href = url;
+                redirUrl(url);
               }
             } else {
-              window.location.pathname = "/not_found.html";
+              redirNotFound();
             }
           })
           .catch(error => {
-              window.location.pathname = "/not_found.html";
+              redirNotFound();
           });
       }
     }
