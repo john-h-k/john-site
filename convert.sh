@@ -59,7 +59,7 @@ done
 defaults=(styles.css 404.html not_found.html)
 for file in "${defaults[@]}"; do
   if ! [ -e "$target_dir/$file" ]; then
-    echo "Copying '$(dirname "$0")/$file' to '$target_dir/$file'"
+    echo "Copying default '$(dirname "$0")/$file' to '$target_dir/$file'"
     cp "$(dirname "$0")/$file" "$target_dir/$file"
   fi
 done
