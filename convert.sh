@@ -64,11 +64,11 @@ for file in $(find "$template_dir" -type f -not -path '*/.*'); do
     content="$(cat "$output_name.tmp" | tr -d '\n')"
 
     if [ -n "$button_link" ]; then
-      sed -i "s/\[\[BUTTON_LINK\]\]/$escaped_button_link/g" "$output_name"
+      sed -i "s,\[\[BUTTON_LINK\]\],$escaped_button_link,g" "$output_name"
     fi
 
     if [ -n "$button_text" ]; then
-      sed -i "s,\[\[BUTTON_TEXT\]\],$escaped_button_text,g" "$output_name"
+      sed -i "s/\[\[BUTTON_TEXT\]\]/$escaped_button_text/g" "$output_name"
     fi
 
     sed -i "s/\[\[TITLE\]\]/$escaped_title/g" "$output_name"
