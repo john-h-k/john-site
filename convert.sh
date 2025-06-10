@@ -2,7 +2,13 @@
 
 template_dir="$1"
 target_dir="$2"
-skeleton="${3:-$(dirname $0)/skeleton.html}"
+skeleton="$3"
+button_link="$4"
+button_text="$5"
+
+if [ "$skeleton" = "$default" ]; then
+  skeleton="${3:-$(dirname $0)/skeleton.html}"
+fi
 
 mkdir -p "$target_dir"
 
@@ -44,6 +50,14 @@ for file in $(find "$template_dir" -type f -not -path '*/.*'); do
     title="$(head -1 "$file" | sed 's/^ *# *//')"
     escaped_title="$(printf '%q' "$title")"
     content="$(cat "$output_name.tmp" | tr -d '\n')"
+
+    if [ -n "$button_link" ]; then
+      sed -i "s/\[\[BUTTON_LINK\]\]/$button_link/g" "$output_name"
+    fi
+
+    if [ -n "$button_text" ]; then
+      sed -i "s/\[\[BUTTON_TEXT\]\]/$button_text/g" "$output_name"
+    fi
 
     sed -i "s/\[\[TITLE\]\]/$escaped_title/g" "$output_name"
     sed -i "/[[BODY]]/{

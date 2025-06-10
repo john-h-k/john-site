@@ -10,6 +10,15 @@ inputs:
   skeleton:
     description: 'Skeleton'
     required: false
+    default: "default"
+  button_link:
+    description: 'Button Link'
+    required: false
+    default: ""
+  button_text:
+    description: 'Button Text'
+    required: false
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -22,5 +31,5 @@ runs:
     - name: Convert Markdown to HTML
       env:
           GH_TOKEN: ${{ github.token }}
-      run: convert.sh "${{ inputs.source }}" "${{ inputs.destination }}" "${{ inputs.skeleton }}"
+      run: convert.sh "${{ inputs.source }}" "${{ inputs.destination }}" "${{ inputs.skeleton }}" "${{ inputs.button_link }}" "${{ inputs.button_text }}"
       shell: bash
