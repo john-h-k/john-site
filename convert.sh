@@ -6,7 +6,19 @@ skeleton="$3"
 button_link="$4"
 button_text="$5"
 
+if [ -n "$button_link" ]; then
+  echo "Using button link '$button_link'"
+  escaped_button_link="$(printf '%q' "$button_link")"
+fi
+
+if [ -n "$button_text" ]; then
+  echo "Using button text '$button_text'"
+  escaped_button_text="$(printf '%q' "$button_text")"
+fi
+
 if [ "$skeleton" = "default" ]; then
+  echo "Using default skeleton"
+
   skeleton="$(dirname $0)/skeleton.html"
 fi
 
@@ -49,8 +61,6 @@ for file in $(find "$template_dir" -type f -not -path '*/.*'); do
   
     title="$(head -1 "$file" | sed 's/^ *# *//')"
     escaped_title="$(printf '%q' "$title")"
-    escaped_button_link="$(printf '%q' "$button_link")"
-    escaped_button_text="$(printf '%q' "$button_text")"
     content="$(cat "$output_name.tmp" | tr -d '\n')"
 
     if [ -n "$button_link" ]; then
