@@ -136,6 +136,7 @@ header > :first-child {
 header > :last-child {
   white-space: nowrap;
   text-align: right;
+  justify-self: end;
 }
 
 header .back-home {
