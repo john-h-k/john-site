@@ -7,7 +7,7 @@ button_link="$4"
 button_text="$5"
 
 if [ "$skeleton" = "default" ]; then
-  skeleton="${3:-$(dirname $0)/skeleton.html}"
+  skeleton="$(dirname $0)/skeleton.html"
 fi
 
 mkdir -p "$target_dir"
